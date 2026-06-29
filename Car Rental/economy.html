@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Economy Cars - CarRental</title>
+
+<style>
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: #f4f4f4;
+  animation: fadeIn 0.8s ease;
+}
+
+/* ── NAVBAR ── */
+
+nav {
+  background: #111;
+  padding: 15px 8%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  color: white;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+  gap: 30px;
+}
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+  transition: 0.2s;
+}
+
+nav ul li a:hover {
+  color: orange;
+}
+
+/* ── HERO BANNER ── */
+
+.hero-banner {
+  height: 320px;
+  background:
+    linear-gradient(rgba(0,0,0,0.58), rgba(0,0,0,0.58)),
+    url("https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=1400")
+    center/cover no-repeat;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: white;
+}
+
+.hero-banner h1 {
+  font-size: 46px;
+  font-weight: bold;
+  margin-bottom: 12px;
+  letter-spacing: 1px;
+}
+
+.hero-banner p {
+  font-size: 18px;
+  color: #ddd;
+  max-width: 500px;
+}
+
+.hero-banner .orange-line {
+  width: 60px;
+  height: 4px;
+  background: orange;
+  border-radius: 2px;
+  margin: 14px auto 0;
+}
+
+/* ── SECTION TITLE ── */
+
+.section-title {
+  text-align: center;
+  padding: 40px 20px 10px;
+  font-size: 30px;
+  font-weight: bold;
+  color: #111;
+}
+
+.section-title span {
+  color: orange;
+}
+
+/* ── CAR GRID ── */
+
+.car-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 28px;
+  padding: 28px 5% 50px;
+}
+
+/* ── CAR CARD ── */
+
+.car-card {
+  background: white;
+  width: 280px;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+  transition: transform 0.3s, box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
+}
+
+.car-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 28px rgba(0,0,0,0.15);
+}
+
+/* Image area */
+.car-img-wrap {
+  position: relative;
+  width: 100%;
+  height: 175px;
+  overflow: hidden;
+  background: #eee;
+}
+
+.car-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s;
+}
+
+.car-card:hover .car-img-wrap img {
+  transform: scale(1.06);
+}
+
+.car-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: orange;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+/* Details area */
+.car-details {
+  padding: 16px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.car-details h3 {
+  font-size: 16px;
+  font-weight: bold;
+  color: #111;
+  margin-bottom: 10px;
+}
+
+/* Icon specs row */
+.specs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 10px;
+  margin-bottom: 12px;
+}
+
+.spec-item {
+  font-size: 13px;
+  color: #555;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* Bottom: price + button */
+.card-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.price {
+  font-size: 20px;
+  font-weight: bold;
+  color: orange;
+}
+
+.price span {
+  font-size: 12px;
+  color: #999;
+  font-weight: normal;
+}
+
+.book-btn {
+  padding: 9px 18px;
+  background: orange;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.book-btn:hover {
+  background: #e69500;
+}
+
+/* ── FOOTER ── */
+
+footer {
+  background: #111;
+  color: white;
+  text-align: center;
+  padding: 22px;
+}
+
+/* ── ANIMATIONS ── */
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── RESPONSIVE ── */
+
+@media (max-width: 768px) {
+  nav { flex-direction: column; gap: 15px; }
+  .hero-banner h1 { font-size: 30px; }
+  .car-card { width: 100%; max-width: 360px; }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- ── NAVBAR ── -->
+<nav>
+  <div class="logo">CarRental</div>
+  <ul>
+    <li><a href="Car_home.html">Home</a></li>
+    <li><a href="Car_home.html#cars">Cars</a></li>
+    <li><a href="economy.html">Economy Cars</a></li>
+    <li><a href="sedan.html">Sedan cars</a></li>
+    <li><a href="suv.html">Suv Cars</a></li>
+    <li><a href="luxury.html">Luxury Cars</a></li>
+    <li><a href="account.html">My Account</a></li>
+  </ul>
+</nav>
+
+<!-- ── HERO BANNER ── -->
+<div class="hero-banner">
+  <h1>Economy Cars</h1>
+  <p>Affordable and fuel-efficient cars for daily travel</p>
+  <div class="orange-line"></div>
+</div>
+
+<!-- ── SECTION TITLE ── -->
+<h2 class="section-title">Available <span>Economy</span> Vehicles</h2>
+
+<!-- ── CAR GRID ── -->
+<div class="car-grid">
+
+  <!-- 1 -->
+  <div class="car-card">
+    <div class="car-img-wrap">
+      <img src="eco1.jpg" onerror="this.src='https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=400'" alt="Maruti Alto K10">
+      <div class="car-badge">Economy</div>
+    </div>
+    <div class="car-details">
+      <h3>Maruti Alto K10</h3>
+      <div class="specs">
+        <div class="spec-item">⭐ 4.5</div>
+        <div class="spec-item">👥 5 Seats</div>
+        <div class="spec-item">⛽ Petrol</div>
+        <div class="spec-item">⚙ Manual</div>
+        <div class="spec-item">🛣 24 km/l</div>
+      </div>
+      <div class="card-bottom">
+        <div class="price">₹1200 <span>/ Day</span></div>
+        <a href="booking.html?car=Maruti Alto K10&rate=1200" class="book-btn">Book Now</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2 -->
+  <div class="car-card">
+    <div class="car-img-wrap">
+      <img src="eco2.jpg" onerror="this.src='https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=400'" alt="Renault Kwid">
+      <div class="car-badge">Economy</div>
+    </div>
+    <div class="car-details">
+      <h3>Renault Kwid</h3>
+      <div class="specs">
+        <div class="spec-item">⭐ 4.4</div>
+        <div class="spec-item">👥 5 Seats</div>
+        <div class="spec-item">⛽ Petrol</div>
+        <div class="spec-item">⚙ Manual</div>
+        <div class="spec-item">🛣 22 km/l</div>
+      </div>
+      <div class="card-bottom">
+        <div class="price">₹1300 <span>/ Day</span></div>
+        <a href="booking.html?car=Renault Kwid&rate=1300" class="book-btn">Book Now</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3 -->
+  <div class="car-card">
+    <div class="car-img-wrap">
+      <img src="eco3.png" onerror="this.src='https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?w=400'" alt="Maruti S-Presso">
+      <div class="car-badge">Economy</div>
+    </div>
+    <div class="car-details">
+      <h3>Maruti S-Presso</h3>
+      <div class="specs">
+        <div class="spec-item">⭐ 4.3</div>
+        <div class="spec-item">👥 5 Seats</div>
+        <div class="spec-item">⛽ Petrol</div>
+        <div class="spec-item">⚙ Manual</div>
+        <div class="spec-item">🛣 25 km/l</div>
+      </div>
+      <div class="card-bottom">
+        <div class="price">₹1350 <span>/ Day</span></div>
+        <a href="booking.html?car=Maruti S-Presso&rate=1350" class="book-btn">Book Now</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4 -->
+  <div class="car-card">
+    <div class="car-img-wrap">
+      <img src="eco4.jpg" onerror="this.src='https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?w=400'" alt="Tata Tiago">
+      <div class="car-badge">Economy</div>
+    </div>
+    <div class="car-details">
+      <h3>Tata Tiago</h3>
+      <div class="specs">
+        <div class="spec-item">⭐ 4.6</div>
+        <div class="spec-item">👥 5 Seats</div>
+        <div class="spec-item">⛽ Petrol</div>
+        <div class="spec-item">⚙ Manual</div>
+        <div class="spec-item">🛣 20 km/l</div>
+      </div>
+      <div class="card-bottom">
+        <div class="price">₹1400 <span>/ Day</span></div>
+        <a href="booking.html?car=Tata Tiago&rate=1400" class="book-btn">Book Now</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5 -->
+  <div class="car-card">
+    <div class="car-img-wrap">
+      <img src="eco5.jpg" onerror="this.src='https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=400'" alt="Hyundai Grand i10 Nios">
+      <div class="car-badge">Economy</div>
+    </div>
+    <div class="car-details">
+      <h3>Hyundai Grand i10 Nios</h3>
+      <div class="specs">
+        <div class="spec-item">⭐ 4.7</div>
+        <div class="spec-item">👥 5 Seats</div>
+        <div class="spec-item">⛽ Petrol</div>
+        <div class="spec-item">⚙ Automatic</div>
+        <div class="spec-item">🛣 21 km/l</div>
+      </div>
+      <div class="card-bottom">
+        <div class="price">₹1500 <span>/ Day</span></div>
+        <a href="booking.html?car=Hyundai Grand i10 Nios&rate=1500" class="book-btn">Book Now</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6 -->
+  <div class="car-card">
+    <div class="car-img-wrap">
+      <img src="eco6.jpg" onerror="this.src='https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=400'" alt="Maruti WagonR">
+      <div class="car-badge">Economy</div>
+    </div>
+    <div class="car-details">
+      <h3>Maruti WagonR</h3>
+      <div class="specs">
+        <div class="spec-item">⭐ 4.4</div>
+        <div class="spec-item">👥 5 Seats</div>
+        <div class="spec-item">⛽ Petrol</div>
+        <div class="spec-item">⚙ Manual</div>
+        <div class="spec-item">🛣 24 km/l</div>
+      </div>
+      <div class="card-bottom">
+        <div class="price">₹1450 <span>/ Day</span></div>
+        <a href="booking.html?car=Maruti WagonR&rate=1450" class="book-btn">Book Now</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7 -->
+  <div class="car-card">
+    <div class="car-img-wrap">
+      <img src="eco7.jpg" onerror="this.src='https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=400'" alt="Citroen C3">
+      <div class="car-badge">Economy</div>
+    </div>
+    <div class="car-details">
+      <h3>Citroen C3</h3>
+      <div class="specs">
+        <div class="spec-item">⭐ 4.5</div>
+        <div class="spec-item">👥 5 Seats</div>
+        <div class="spec-item">⛽ Petrol</div>
+        <div class="spec-item">⚙ Manual</div>
+        <div class="spec-item">🛣 19 km/l</div>
+      </div>
+      <div class="card-bottom">
+        <div class="price">₹1600 <span>/ Day</span></div>
+        <a href="booking.html?car=Citroen C3&rate=1600" class="book-btn">Book Now</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8 -->
+  <div class="car-card">
+    <div class="car-img-wrap">
+      <img src="eco8.jpg" onerror="this.src='https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=400'" alt="Tata Punch">
+      <div class="car-badge">Economy</div>
+    </div>
+    <div class="car-details">
+      <h3>Tata Punch</h3>
+      <div class="specs">
+        <div class="spec-item">⭐ 4.8</div>
+        <div class="spec-item">👥 5 Seats</div>
+        <div class="spec-item">⛽ Petrol</div>
+        <div class="spec-item">⚙ Manual</div>
+        <div class="spec-item">🛣 20 km/l</div>
+      </div>
+      <div class="card-bottom">
+        <div class="price">₹1700 <span>/ Day</span></div>
+        <a href="booking.html?car=Tata Punch&rate=1700" class="book-btn">Book Now</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 9 -->
+  <div class="car-card">
+    <div class="car-img-wrap">
+      <img src="eco9.jpg" onerror="this.src='https://images.unsplash.com/photo-1502877338535-766e1452684a?w=400'" alt="Hyundai Exter">
+      <div class="car-badge">Economy</div>
+    </div>
+    <div class="car-details">
+      <h3>Hyundai Exter</h3>
+      <div class="specs">
+        <div class="spec-item">⭐ 4.7</div>
+        <div class="spec-item">👥 5 Seats</div>
+        <div class="spec-item">⛽ Petrol</div>
+        <div class="spec-item">⚙ Automatic</div>
+        <div class="spec-item">🛣 19 km/l</div>
+      </div>
+      <div class="card-bottom">
+        <div class="price">₹1750 <span>/ Day</span></div>
+        <a href="booking.html?car=Hyundai Exter&rate=1750" class="book-btn">Book Now</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 10 -->
+  <div class="car-card">
+    <div class="car-img-wrap">
+      <img src="eco10.jpg" onerror="this.src='https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=400'" alt="Nissan Magnite">
+      <div class="car-badge">Economy</div>
+    </div>
+    <div class="car-details">
+      <h3>Nissan Magnite</h3>
+      <div class="specs">
+        <div class="spec-item">⭐ 4.6</div>
+        <div class="spec-item">👥 5 Seats</div>
+        <div class="spec-item">⛽ Petrol</div>
+        <div class="spec-item">⚙ Manual</div>
+        <div class="spec-item">🛣 20 km/l</div>
+      </div>
+      <div class="card-bottom">
+        <div class="price">₹1800 <span>/ Day</span></div>
+        <a href="booking.html?car=Nissan Magnite&rate=1800" class="book-btn">Book Now</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 11 -->
+  <div class="car-card">
+    <div class="car-img-wrap">
+      <img src="eco11.jpg" onerror="this.src='https://images.unsplash.com/photo-1547245324-d777c6f05e80?w=400'" alt="Maruti Suzuki Celerio">
+      <div class="car-badge">Economy</div>
+    </div>
+    <div class="car-details">
+      <h3>Maruti Suzuki Celerio</h3>
+      <div class="specs">
+        <div class="spec-item">⭐ 4.5</div>
+        <div class="spec-item">👥 5 Seats</div>
+        <div class="spec-item">⛽ Petrol</div>
+        <div class="spec-item">⚙ Automatic</div>
+        <div class="spec-item">🛣 26 km/l</div>
+      </div>
+      <div class="card-bottom">
+        <div class="price">₹1650 <span>/ Day</span></div>
+        <a href="booking.html?car=Maruti Suzuki Celerio&rate=1650" class="book-btn">Book Now</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 12 -->
+  <div class="car-card">
+    <div class="car-img-wrap">
+      <img src="eco12.jpg" onerror="this.src='https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400'" alt="Hyundai Santro">
+      <div class="car-badge">Economy</div>
+    </div>
+    <div class="car-details">
+      <h3>Hyundai Santro</h3>
+      <div class="specs">
+        <div class="spec-item">⭐ 4.4</div>
+        <div class="spec-item">👥 5 Seats</div>
+        <div class="spec-item">⛽ Petrol</div>
+        <div class="spec-item">⚙ Manual</div>
+        <div class="spec-item">🛣 21 km/l</div>
+      </div>
+      <div class="card-bottom">
+        <div class="price">₹1550 <span>/ Day</span></div>
+        <a href="booking.html?car=Hyundai Santro&rate=1550" class="book-btn">Book Now</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <p>© 2026 CarRental Booking System &nbsp;|&nbsp; Email: support@carrental.com</p>
+</footer>
+
+</body>
+</html>

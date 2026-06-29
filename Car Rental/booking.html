@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book Your Car - CarRental</title>
+<style>
+*{ margin:0; padding:0; box-sizing:border-box; font-family:Arial,sans-serif; }
+body{ background:#f4f4f4; min-height:100vh; }
+nav{
+  background:#111; padding:15px 8%;
+  display:flex; justify-content:space-between; align-items:center;
+}
+.logo{ color:white; font-size:28px; font-weight:bold; }
+nav ul{ display:flex; list-style:none; gap:30px; }
+nav ul li a{ color:white; text-decoration:none; font-size:18px; }
+nav ul li a:hover{ color:orange; }
+.container{
+  max-width:900px; margin:40px auto; background:white;
+  padding:30px; border-radius:15px; box-shadow:0 5px 20px rgba(0,0,0,0.1);
+}
+.container h1{ text-align:center; margin-bottom:10px; }
+.logged-in-banner{
+  background:#fff8ee; border:1px solid orange; border-radius:8px;
+  padding:10px 16px; margin-bottom:20px; font-size:14px; color:#92400e;
+  display:none;
+}
+.form-group{ margin-bottom:18px; }
+label{ display:block; margin-bottom:6px; font-weight:bold; }
+input, select{
+  width:100%; padding:12px; border:1px solid #ccc;
+  border-radius:8px; font-size:15px;
+}
+input:focus, select:focus{
+  outline:none; border-color:orange; box-shadow:0 0 8px rgba(255,165,0,0.3);
+}
+.error{ color:red; font-size:13px; margin-top:5px; }
+.summary{
+  margin-top:25px; padding:20px;
+  background:#f8f8f8; border-radius:10px;
+}
+.summary h3{ margin-bottom:10px; }
+.total{ font-size:24px; font-weight:bold; color:orange; margin-top:10px; }
+button{
+  width:100%; padding:14px; background:orange; color:white;
+  border:none; border-radius:8px; font-size:18px; font-weight:bold;
+  cursor:pointer; margin-top:20px; transition:0.3s;
+}
+button:hover{ background:#e69500; }
+footer{ background:#111; color:white; text-align:center; padding:20px; margin-top:40px; }
+@media(max-width:768px){ nav{ flex-direction:column; gap:15px; } .container{ margin:20px; padding:20px; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">CarRental</div>
+  <ul>
+    <li><a href="Car_home.html">Home</a></li>
+    <li><a href="economy.html">Cars</a></li>
+    <li><a href="account.html">My Account</a></li>
+    <li><a href="login.html" id="logoutLink">Logout</a></li>
+  </ul>
+</nav>
+
+<div class="container">
+  <h1>Book Your Car</h1>
+
+  <!-- Shows logged-in user's name -->
+  <div class="logged-in-banner" id="loginBanner">
+    👤 Booking as: <strong id="bannerName"></strong> — your details have been filled in automatically.
+  </div>
+
+  <form id="bookingForm">
+
+    <div class="form-group">
+      <label>Full Name</label>
+      <input type="text" id="name" required>
+      <div class="error" id="nameError"></div>
+    </div>
+
+    <div class="form-group">
+      <label>Email Address</label>
+      <input type="email" id="email" required>
+      <div class="error" id="emailError"></div>
+    </div>
+
+    <div class="form-group">
+      <label>Phone Number</label>
+      <input type="text" id="phone" maxlength="10" required>
+      <div class="error" id="phoneError"></div>
+    </div>
+
+    <div class="form-group">
+      <label>Pickup Location</label>
+      <select id="pickup">
+        <option value="">Select Pickup Location</option>
+        <option>Chennai Central</option>
+        <option>Chennai Airport</option>
+        <option>T. Nagar</option>
+        <option>Anna Nagar</option>
+        <option>Tambaram</option>
+        <option>Velachery</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Select Car</label>
+      <select id="car">
+        <option value="">Choose Car</option>
+        <option value="1200">Maruti Alto K10 — ₹1200/day</option>
+        <option value="1300">Renault Kwid — ₹1300/day</option>
+        <option value="1350">Maruti S-Presso — ₹1350/day</option>
+        <option value="1400">Tata Tiago — ₹1400/day</option>
+        <option value="1500">Hyundai Grand i10 Nios — ₹1500/day</option>
+        <option value="1450">Maruti WagonR — ₹1450/day</option>
+        <option value="1600">Citroen C3 — ₹1600/day</option>
+        <option value="1700">Tata Punch — ₹1700/day</option>
+        <option value="1750">Hyundai Exter — ₹1750/day</option>
+        <option value="1800">Nissan Magnite — ₹1800/day</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Pickup Date</label>
+      <input type="date" id="pickupDate" required>
+    </div>
+
+    <div class="form-group">
+      <label>Return Date</label>
+      <input type="date" id="returnDate" required>
+    </div>
+
+    <div class="summary">
+      <h3>Booking Summary</h3>
+      <p>Selected Car Rate: ₹<span id="rate">0</span>/day</p>
+      <p>Number of Days: <span id="daysDisplay">0</span></p>
+      <div class="total">Total Amount: ₹<span id="total">0</span></div>
+    </div>
+
+    <button type="submit">Confirm Booking</button>
+  </form>
+</div>
+
+<footer><p>© 2026 CarRental Booking System</p></footer>
+
+<script>
+// ── Set date minimums ──
+const today = new Date().toISOString().split('T')[0];
+document.getElementById('pickupDate').min = today;
+document.getElementById('returnDate').min = today;
+
+// ── Pre-fill from logged-in user ──
+const session = JSON.parse(localStorage.getItem('crSession') || 'null');
+const savedUser = JSON.parse(localStorage.getItem('crUser') || 'null');
+
+if (session && session.loggedIn) {
+  // Fill name and email automatically
+  document.getElementById('name').value  = session.name  || '';
+  document.getElementById('email').value = session.email || '';
+
+  // Fill phone if available
+  if (savedUser && savedUser.phone) {
+    document.getElementById('phone').value = savedUser.phone;
+  }
+
+  // Show the banner
+  const banner = document.getElementById('loginBanner');
+  banner.style.display = 'block';
+  document.getElementById('bannerName').textContent = session.name;
+} else {
+  // Not logged in — redirect to login
+  window.location.href = 'login.html';
+}
+
+// ── Dynamic price calculation ──
+const carSelect   = document.getElementById('car');
+const pickupInput = document.getElementById('pickupDate');
+const returnInput = document.getElementById('returnDate');
+
+function calculatePrice() {
+  const rate   = parseInt(carSelect.value) || 0;
+  const pickup = pickupInput.value;
+  const ret    = returnInput.value;
+  let days = 0;
+
+  if (pickup && ret && ret >= pickup) {
+    const d1 = new Date(pickup);
+    const d2 = new Date(ret);
+    days = Math.max(1, Math.round((d2 - d1) / (1000 * 60 * 60 * 24)));
+  }
+
+  document.getElementById('rate').textContent  = rate;
+  document.getElementById('daysDisplay').textContent = days;
+  document.getElementById('total').textContent = rate * days;
+}
+
+carSelect.addEventListener('change', calculatePrice);
+pickupInput.addEventListener('change', calculatePrice);
+returnInput.addEventListener('change', calculatePrice);
+
+// ── Form submission — save booking to localStorage ──
+document.getElementById('bookingForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  const name     = document.getElementById('name').value.trim();
+  const email    = document.getElementById('email').value.trim();
+  const phone    = document.getElementById('phone').value.trim();
+  const pickup   = document.getElementById('pickupDate').value;
+  const ret      = document.getElementById('returnDate').value;
+  const carText  = carSelect.options[carSelect.selectedIndex]?.text || '';
+  const carName  = carText.split('—')[0].trim();
+  const rate     = parseInt(carSelect.value) || 0;
+  const location = document.getElementById('pickup').value;
+
+  // Clear errors
+  document.getElementById('nameError').textContent  = '';
+  document.getElementById('emailError').textContent = '';
+  document.getElementById('phoneError').textContent = '';
+
+  let valid = true;
+
+  if (!/^[A-Za-z ]+$/.test(name)) {
+    document.getElementById('nameError').textContent = 'Name should contain only letters.'; valid = false;
+  }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    document.getElementById('emailError').textContent = 'Enter a valid email address.'; valid = false;
+  }
+  if (!/^[0-9]{10}$/.test(phone)) {
+    document.getElementById('phoneError').textContent = 'Phone must be exactly 10 digits.'; valid = false;
+  }
+  if (!carSelect.value) { alert('Please select a car.'); valid = false; }
+  if (!pickup || !ret)  { alert('Please select pickup and return dates.'); valid = false; }
+  if (ret < pickup)     { alert('Return date cannot be before pickup date.'); valid = false; }
+  if (!location)        { alert('Please select a pickup location.'); valid = false; }
+
+  if (!valid) return;
+
+  // Calculate days & total
+  const d1   = new Date(pickup);
+  const d2   = new Date(ret);
+  const days = Math.max(1, Math.round((d2 - d1) / (1000 * 60 * 60 * 24)));
+  const total = rate * days;
+
+  // Generate booking ID
+  const bookingId = 'CR' + Date.now().toString().slice(-6);
+
+  // Format dates nicely
+  const fmt = d => new Date(d).toLocaleDateString('en-IN', { day:'2-digit', month:'short', year:'numeric' });
+
+  // Build booking object
+  const booking = {
+    id       : bookingId,
+    car      : carName,
+    pickup   : fmt(pickup),
+    ret      : fmt(ret),
+    days     : days,
+    location : location,
+    total    : total,
+    status   : 'Active',
+    date     : new Date().toISOString()
+  };
+
+  // Save to localStorage bookings list
+  const bookings = JSON.parse(localStorage.getItem('crBookings') || '[]');
+  bookings.unshift(booking); // newest first
+  localStorage.setItem('crBookings', JSON.stringify(bookings));
+
+  // Save last booking separately for confirmation page
+  localStorage.setItem('crLastBooking', JSON.stringify(booking));
+
+  window.location.href = 'confirmation.html';
+});
+</script>
+</body>
+</html>

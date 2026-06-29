@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Booking Confirmed - CarRental</title>
+<style>
+*{ margin:0; padding:0; box-sizing:border-box; font-family:Arial,sans-serif; }
+body{
+  min-height:100vh; display:flex; justify-content:center; align-items:center;
+  background: linear-gradient(rgba(0,0,0,0.65),rgba(0,0,0,0.65)),
+  url("https://images.unsplash.com/photo-1503376780353-7e6692767b70") center/cover no-repeat;
+}
+.confirmation-box{
+  background:rgba(255,255,255,0.97); padding:40px; width:90%; max-width:600px;
+  border-radius:15px; text-align:center; box-shadow:0 8px 25px rgba(0,0,0,0.3);
+  animation: fadeIn 0.8s ease;
+}
+.success-icon{ font-size:80px; margin-bottom:15px; }
+h1{ color:#28a745; margin-bottom:15px; }
+.booking-id{ font-size:22px; font-weight:bold; color:orange; margin:20px 0; }
+.details-box{
+  background:#f8f8f8; border-radius:10px; padding:20px;
+  text-align:left; margin:20px 0;
+}
+.details-box p{
+  font-size:15px; color:#444; padding:7px 0;
+  border-bottom:1px solid #eee; display:flex; justify-content:space-between;
+}
+.details-box p:last-child{ border-bottom:none; }
+.details-box p strong{ color:#111; }
+.total-line{ font-size:18px; font-weight:bold; color:orange; }
+p.sub{ font-size:16px; color:#555; line-height:1.6; margin-bottom:10px; }
+.btn-group{
+  margin-top:25px; display:flex;
+  justify-content:center; gap:15px; flex-wrap:wrap;
+}
+.btn{
+  padding:12px 25px; border:none; border-radius:8px;
+  font-size:16px; font-weight:bold; cursor:pointer;
+  text-decoration:none; transition:0.3s;
+}
+.home-btn{ background:orange; color:white; }
+.home-btn:hover{ background:#e69500; }
+.account-btn{ background:#111; color:white; }
+.account-btn:hover{ background:#333; }
+@keyframes fadeIn{ from{ opacity:0; transform:translateY(20px); } to{ opacity:1; transform:translateY(0); } }
+@media(max-width:600px){ .confirmation-box{ padding:25px; } h1{ font-size:26px; } }
+</style>
+</head>
+<body>
+<div class="confirmation-box">
+  <div class="success-icon">✅</div>
+  <h1>Booking Confirmed!</h1>
+  <p class="sub">Your car rental booking has been confirmed successfully.</p>
+
+  <div class="booking-id" id="bookingIdDisplay">Booking ID: —</div>
+
+  <div class="details-box" id="detailsBox">
+    <p><span>Car</span>           <strong id="detCar">—</strong></p>
+    <p><span>Pickup Date</span>   <strong id="detPickup">—</strong></p>
+    <p><span>Return Date</span>   <strong id="detReturn">—</strong></p>
+    <p><span>Duration</span>      <strong id="detDays">—</strong></p>
+    <p><span>Location</span>      <strong id="detLocation">—</strong></p>
+    <p class="total-line"><span>Total Amount</span> <strong id="detTotal">—</strong></p>
+  </div>
+
+  <p class="sub">Thank you for choosing <b>CarRental</b>.<br>We wish you a safe and comfortable journey.</p>
+
+  <div class="btn-group">
+    <a href="Car_home.html" class="btn home-btn">Go To Home</a>
+    <a href="account.html" class="btn account-btn">View My Bookings</a>
+  </div>
+</div>
+
+<script>
+// Read last booking from localStorage
+const b = JSON.parse(localStorage.getItem('crLastBooking') || 'null');
+
+if (b) {
+  document.getElementById('bookingIdDisplay').textContent = 'Booking ID: ' + b.id;
+  document.getElementById('detCar').textContent      = b.car;
+  document.getElementById('detPickup').textContent   = b.pickup;
+  document.getElementById('detReturn').textContent   = b.ret;
+  document.getElementById('detDays').textContent     = b.days + (b.days === 1 ? ' Day' : ' Days');
+  document.getElementById('detLocation').textContent = b.location;
+  document.getElementById('detTotal').textContent    = '₹' + b.total.toLocaleString('en-IN');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Luxury Cars - CarRental</title>
+
+<style>
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+
+body { background: #f4f4f4; animation: fadeIn 0.8s ease; }
+
+nav {
+  background: #111; padding: 15px 8%;
+  display: flex; justify-content: space-between; align-items: center;
+  position: sticky; top: 0; z-index: 100;
+}
+
+.logo { color: white; font-size: 28px; font-weight: bold; }
+nav ul { display: flex; list-style: none; gap: 30px; }
+nav ul li a { color: white; text-decoration: none; font-size: 16px; transition: 0.2s; }
+nav ul li a:hover { color: orange; }
+
+.hero-banner {
+  height: 320px;
+  background:
+    linear-gradient(rgba(0,0,0,0.60), rgba(0,0,0,0.60)),
+    url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1400")
+    center/cover no-repeat;
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: center;
+  text-align: center; color: white;
+}
+
+.hero-banner h1 { font-size: 46px; font-weight: bold; margin-bottom: 12px; letter-spacing: 2px; }
+.hero-banner p  { font-size: 18px; color: #ddd; max-width: 520px; }
+.hero-banner .orange-line { width: 60px; height: 4px; background: orange; border-radius: 2px; margin: 14px auto 0; }
+
+.section-title { text-align: center; padding: 40px 20px 10px; font-size: 30px; font-weight: bold; color: #111; }
+.section-title span { color: orange; }
+
+.car-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 28px; padding: 28px 5% 50px; }
+
+.car-card {
+  background: white; width: 280px; border-radius: 14px; overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+  transition: transform 0.3s, box-shadow 0.3s;
+  display: flex; flex-direction: column;
+}
+
+.car-card:hover { transform: translateY(-6px); box-shadow: 0 10px 28px rgba(0,0,0,0.18); }
+
+.car-img-wrap { position: relative; width: 100%; height: 175px; overflow: hidden; background: #222; }
+.car-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
+.car-card:hover .car-img-wrap img { transform: scale(1.06); }
+
+.car-badge {
+  position: absolute; top: 10px; left: 10px;
+  background: #b8860b; color: white;
+  font-size: 12px; font-weight: bold;
+  padding: 4px 10px; border-radius: 20px;
+  letter-spacing: 0.5px;
+}
+
+.car-details { padding: 16px; flex: 1; display: flex; flex-direction: column; }
+.car-details h3 { font-size: 16px; font-weight: bold; color: #111; margin-bottom: 10px; }
+
+.specs { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 10px; margin-bottom: 12px; }
+.spec-item { font-size: 13px; color: #555; display: flex; align-items: center; gap: 5px; }
+
+.card-bottom {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: auto; padding-top: 12px; border-top: 1px solid #f0f0f0;
+}
+
+.price { font-size: 20px; font-weight: bold; color: #b8860b; }
+.price span { font-size: 12px; color: #999; font-weight: normal; }
+
+.book-btn {
+  padding: 9px 18px; background: #111; border: none;
+  border-radius: 8px; font-size: 14px; font-weight: bold;
+  color: white; cursor: pointer; transition: 0.3s;
+  text-decoration: none; display: inline-block;
+}
+
+.book-btn:hover { background: #333; }
+
+footer { background: #111; color: white; text-align: center; padding: 22px; }
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+@media (max-width: 768px) {
+  nav { flex-direction: column; gap: 15px; }
+  .hero-banner h1 { font-size: 30px; }
+  .car-card { width: 100%; max-width: 360px; }
+}
+
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">CarRental</div>
+  <ul>
+    <li><a href="Car_home.html">Home</a></li>
+    <li><a href="Car_home.html#cars">Cars</a></li>
+    <li><a href="economy.html">Economy Cars</a></li>
+    <li><a href="sedan.html">Sedan cars</a></li>
+    <li><a href="suv.html">Suv Cars</a></li>
+    <li><a href="luxury.html">Luxury Cars</a></li>
+    <li><a href="account.html">My Account</a></li>
+  </ul>
+</nav>
+
+<div class="hero-banner">
+  <h1>Luxury Cars</h1>
+  <p>Premium vehicles for an extraordinary driving experience</p>
+  <div class="orange-line"></div>
+</div>
+
+<h2 class="section-title">Available <span>Luxury</span> Vehicles</h2>
+
+<div class="car-grid">
+
+  <!-- 1. BMW 7 Series -->
+  <div class="car-card">
+    <div class="car-img-wrap">
+      <img src="lux1.jpg" onerror="this.src='https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=400'" alt="BMW 7 Series">
+      <div class="car-badge">✦ Luxury</div>
+    </div>
+    <div class="car-details">
+      <h3>BMW 7 Series</h3>
+      <div class="specs">
+        <div class="spec-item">⭐ 4.9</div>
+        <div class="spec-item">👥 5 Seats</div>
+        <div class="spec-item">⛽ Petrol</div>
+        <div class="spec-item">⚙ Automatic</div>
+        <div class="spec-item">🛣 12 km/l</div>
+      </div>
+      <div class="card-bottom">
+        <div class="price">₹8500 <span>/ Day</span></div>
+        <a href="booking.html?car=BMW 7 Series&rate=8500" class="book-btn">Book Now</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Mercedes-Benz E-Class -->
+  <div class="car-card">
+    <div class="car-img-wrap">
+      <img src="lux2.jpg" onerror="this.src='https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=400'" alt="Mercedes-Benz E-Class">
+      <div class="car-badge">✦ Luxury</div>
+    </div>
+    <div class="car-details">
+      <h3>Mercedes-Benz E-Class</h3>
+      <div class="specs">
+        <div class="spec-item">⭐ 4.9</div>
+        <div class="spec-item">👥 5 Seats</div>
+        <div class="spec-item">⛽ Petrol</div>
+        <div class="spec-item">⚙ Automatic</div>
+        <div class="spec-item">🛣 13 km/l</div>
+      </div>
+      <div class="card-bottom">
+        <div class="price">₹9000 <span>/ Day</span></div>
+        <a href="booking.html?car=Mercedes-Benz E-Class&rate=9000" class="book-btn">Book Now</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Audi A6 -->
+  <div class="car-card">
+    <div class="car-img-wrap">
+      <img src="lux3.jpg" onerror="this.src='https://images.unsplash.com/photo-1555215695-3004980ad54e?w=400'" alt="Audi A6">
+      <div class="car-badge">✦ Luxury</div>
+    </div>
+    <div class="car-details">
+      <h3>Audi A6</h3>
+      <div class="specs">
+        <div class="spec-item">⭐ 4.8</div>
+        <div class="spec-item">👥 5 Seats</div>
+        <div class="spec-item">⛽ Petrol</div>
+        <div class="spec-item">⚙ Automatic</div>
+        <div class="spec-item">🛣 14 km/l</div>
+      </div>
+      <div class="card-bottom">
+        <div class="price">₹8800 <span>/ Day</span></div>
+        <a href="booking.html?car=Audi A6&rate=8800" class="book-btn">Book Now</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. BMW X5 -->
+  <div class="car-card">
+    <div class="car-img-wrap">
+      <img src="lux4.jpg" onerror="this.src='https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=400'" alt="BMW X5">
+      <div class="car-badge">✦ Luxury</div>
+    </div>
+    <div class="car-details">
+      <h3>BMW X5</h3>
+      <div class="specs">
+        <div class="spec-item">⭐ 4.9</div>
+        <div class="spec-item">👥 7 Seats</div>
+        <div class="spec-item">⛽ Diesel</div>
+        <div class="spec-item">⚙ Automatic</div>
+        <div class="spec-item">🛣 12 km/l</div>
+      </div>
+      <div class="card-bottom">
+        <div class="price">₹12000 <span>/ Day</span></div>
+        <a href="booking.html?car=BMW X5&rate=12000" class="book-btn">Book Now</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. Mercedes-Benz GLE -->
+  <div class="car-card">
+    <div class="car-img-wrap">
+      <img src="lux5.jpg" onerror="this.src='https://images.unsplash.com/photo-1502877338535-766e1452684a?w=400'" alt="Mercedes-Benz GLE">
+      <div class="car-badge">✦ Luxury</div>
+    </div>
+    <div class="car-details">
+      <h3>Mercedes-Benz GLE</h3>
+      <div class="specs">
+        <div class="spec-item">⭐ 4.8</div>
+        <div class="spec-item">👥 7 Seats</div>
+        <div class="spec-item">⛽ Diesel</div>
+        <div class="spec-item">⚙ Automatic</div>
+        <div class="spec-item">🛣 11 km/l</div>
+      </div>
+      <div class="card-bottom">
+        <div class="price">₹12500 <span>/ Day</span></div>
+        <a href="booking.html?car=Mercedes-Benz GLE&rate=12500" class="book-btn">Book Now</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. Audi Q7 -->
+  <div class="car-card">
+    <div class="car-img-wrap">
+      <img src="lux6.jpg" onerror="this.src='https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=400'" alt="Audi Q7">
+      <div class="car-badge">✦ Luxury</div>
+    </div>
+    <div class="car-details">
+      <h3>Audi Q7</h3>
+      <div class="specs">
+        <div class="spec-item">⭐ 4.9</div>
+        <div class="spec-item">👥 7 Seats</div>
+        <div class="spec-item">⛽ Petrol</div>
+        <div class="spec-item">⚙ Automatic</div>
+        <div class="spec-item">🛣 11 km/l</div>
+      </div>
+      <div class="card-bottom">
+        <div class="price">₹13000 <span>/ Day</span></div>
+        <a href="booking.html?car=Audi Q7&rate=13000" class="book-btn">Book Now</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. Range Rover Velar -->
+  <div class="car-card">
+    <div class="car-img-wrap">
+      <img src="lux7.jpg" onerror="this.src='https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=400'" alt="Range Rover Velar">
+      <div class="car-badge">✦ Luxury</div>
+    </div>
+    <div class="car-details">
+      <h3>Range Rover Velar</h3>
+      <div class="specs">
+        <div class="spec-item">⭐ 4.9</div>
+        <div class="spec-item">👥 5 Seats</div>
+        <div class="spec-item">⛽ Petrol</div>
+        <div class="spec-item">⚙ Automatic</div>
+        <div class="spec-item">🛣 10 km/l</div>
+      </div>
+      <div class="card-bottom">
+        <div class="price">₹15000 <span>/ Day</span></div>
+        <a href="booking.html?car=Range Rover Velar&rate=15000" class="book-btn">Book Now</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8. Jaguar F-Pace -->
+  <div class="car-card">
+    <div class="car-img-wrap">
+      <img src="lux8.jpg" onerror="this.src='https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=400'" alt="Jaguar F-Pace">
+      <div class="car-badge">✦ Luxury</div>
+    </div>
+    <div class="car-details">
+      <h3>Jaguar F-Pace</h3>
+      <div class="specs">
+        <div class="spec-item">⭐ 4.8</div>
+        <div class="spec-item">👥 5 Seats</div>
+        <div class="spec-item">⛽ Petrol</div>
+        <div class="spec-item">⚙ Automatic</div>
+        <div class="spec-item">🛣 12 km/l</div>
+      </div>
+      <div class="card-bottom">
+        <div class="price">₹14000 <span>/ Day</span></div>
+        <a href="booking.html?car=Jaguar F-Pace&rate=14000" class="book-btn">Book Now</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 9. Porsche Cayenne -->
+  <div class="car-card">
+    <div class="car-img-wrap">
+      <img src="lux9.jpg" onerror="this.src='https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=400'" alt="Porsche Cayenne">
+      <div class="car-badge">✦ Luxury</div>
+    </div>
+    <div class="car-details">
+      <h3>Porsche Cayenne</h3>
+      <div class="specs">
+        <div class="spec-item">⭐ 5.0</div>
+        <div class="spec-item">👥 5 Seats</div>
+        <div class="spec-item">⛽ Petrol</div>
+        <div class="spec-item">⚙ Automatic</div>
+        <div class="spec-item">🛣 10 km/l</div>
+      </div>
+      <div class="card-bottom">
+        <div class="price">₹18000 <span>/ Day</span></div>
+        <a href="booking.html?car=Porsche Cayenne&rate=18000" class="book-btn">Book Now</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 10. Lexus ES 300h -->
+  <div class="car-card">
+    <div class="car-img-wrap">
+      <img src="lux10.jpg" onerror="this.src='https://images.unsplash.com/photo-1555215695-3004980ad54e?w=400'" alt="Lexus ES 300h">
+      <div class="car-badge">✦ Luxury</div>
+    </div>
+    <div class="car-details">
+      <h3>Lexus ES 300h</h3>
+      <div class="specs">
+        <div class="spec-item">⭐ 4.8</div>
+        <div class="spec-item">👥 5 Seats</div>
+        <div class="spec-item">⛽ Hybrid</div>
+        <div class="spec-item">⚙ Automatic</div>
+        <div class="spec-item">🛣 20 km/l</div>
+      </div>
+      <div class="card-bottom">
+        <div class="price">₹11000 <span>/ Day</span></div>
+        <a href="booking.html?car=Lexus ES 300h&rate=11000" class="book-btn">Book Now</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 11. Volvo XC90 -->
+  <div class="car-card">
+    <div class="car-img-wrap">
+      <img src="lux11.jpg" onerror="this.src='https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?w=400'" alt="Volvo XC90">
+      <div class="car-badge">✦ Luxury</div>
+    </div>
+    <div class="car-details">
+      <h3>Volvo XC90</h3>
+      <div class="specs">
+        <div class="spec-item">⭐ 4.9</div>
+        <div class="spec-item">👥 7 Seats</div>
+        <div class="spec-item">⛽ Hybrid</div>
+        <div class="spec-item">⚙ Automatic</div>
+        <div class="spec-item">🛣 17 km/l</div>
+      </div>
+      <div class="card-bottom">
+        <div class="price">₹14500 <span>/ Day</span></div>
+        <a href="booking.html?car=Volvo XC90&rate=14500" class="book-btn">Book Now</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 12. Toyota Vellfire -->
+  <div class="car-card">
+    <div class="car-img-wrap">
+      <img src="lux12.jpg" onerror="this.src='https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=400'" alt="Toyota Vellfire">
+      <div class="car-badge">✦ Luxury</div>
+    </div>
+    <div class="car-details">
+      <h3>Toyota Vellfire</h3>
+      <div class="specs">
+        <div class="spec-item">⭐ 4.9</div>
+        <div class="spec-item">👥 7 Seats</div>
+        <div class="spec-item">⛽ Hybrid</div>
+        <div class="spec-item">⚙ Automatic</div>
+        <div class="spec-item">🛣 16 km/l</div>
+      </div>
+      <div class="card-bottom">
+        <div class="price">₹16000 <span>/ Day</span></div>
+        <a href="booking.html?car=Toyota Vellfire&rate=16000" class="book-btn">Book Now</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>© 2026 CarRental Booking System &nbsp;|&nbsp; Email: support@carrental.com</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SUV Cars - CarRental</title>
+
+<style>
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: #f4f4f4;
+  animation: fadeIn 0.8s ease;
+}
+
+nav {
+  background: #111;
+  padding: 15px 8%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo { color: white; font-size: 28px; font-weight: bold; }
+
+nav ul { display: flex; list-style: none; gap: 30px; }
+
+nav ul li a { color: white; text-decoration: none; font-size: 16px; transition: 0.2s; }
+
+nav ul li a:hover { color: orange; }
+
+.hero-banner {
+  height: 320px;
+  background:
+    linear-gradient(rgba(0,0,0,0.58), rgba(0,0,0,0.58)),
+    url("https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=1400")
+    center/cover no-repeat;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: white;
+}
+
+.hero-banner h1 { font-size: 46px; font-weight: bold; margin-bottom: 12px; letter-spacing: 1px; }
+.hero-banner p  { font-size: 18px; color: #ddd; max-width: 500px; }
+.hero-banner .orange-line { width: 60px; height: 4px; background: orange; border-radius: 2px; margin: 14px auto 0; }
+
+.section-title { text-align: center; padding: 40px 20px 10px; font-size: 30px; font-weight: bold; color: #111; }
+.section-title span { color: orange; }
+
+.car-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 28px; padding: 28px 5% 50px; }
+
+.car-card {
+  background: white;
+  width: 280px;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+  transition: transform 0.3s, box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
+}
+
+.car-card:hover { transform: translateY(-6px); box-shadow: 0 10px 28px rgba(0,0,0,0.15); }
+
+.car-img-wrap { position: relative; width: 100%; height: 175px; overflow: hidden; background: #eee; }
+
+.car-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
+
+.car-card:hover .car-img-wrap img { transform: scale(1.06); }
+
+.car-badge {
+  position: absolute; top: 10px; left: 10px;
+  background: orange; color: white;
+  font-size: 12px; font-weight: bold;
+  padding: 4px 10px; border-radius: 20px;
+}
+
+.car-details { padding: 16px; flex: 1; display: flex; flex-direction: column; }
+
+.car-details h3 { font-size: 16px; font-weight: bold; color: #111; margin-bottom: 10px; }
+
+.specs { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 10px; margin-bottom: 12px; }
+
+.spec-item { font-size: 13px; color: #555; display: flex; align-items: center; gap: 5px; }
+
+.card-bottom {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: auto; padding-top: 12px; border-top: 1px solid #f0f0f0;
+}
+
+.price { font-size: 20px; font-weight: bold; color: orange; }
+.price span { font-size: 12px; color: #999; font-weight: normal; }
+
+.book-btn {
+  padding: 9px 18px; background: orange; border: none;
+  border-radius: 8px; font-size: 14px; font-weight: bold;
+  color: white; cursor: pointer; transition: 0.3s;
+  text-decoration: none; display: inline-block;
+}
+
+.book-btn:hover { background: #e69500; }
+
+footer { background: #111; color: white; text-align: center; padding: 22px; }
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+@media (max-width: 768px) {
+  nav { flex-direction: column; gap: 15px; }
+  .hero-banner h1 { font-size: 30px; }
+  .car-card { width: 100%; max-width: 360px; }
+}
+
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">CarRental</div>
+  <ul>
+    <li><a href="Car_home.html">Home</a></li>
+    <li><a href="Car_home.html#cars">Cars</a></li>
+    <li><a href="economy.html">Economy Cars</a></li>
+    <li><a href="sedan.html">Sedan cars</a></li>
+    <li><a href="suv.html">Suv Cars</a></li>
+    <li><a href="luxury.html">Luxury Cars</a></li>
+    <li><a href="account.html">My Account</a></li>
+  </ul>
+</nav>
+
+<div class="hero-banner">
+  <h1>SUV Cars</h1>
+  <p>Powerful and spacious SUVs for every road and adventure</p>
+  <div class="orange-line"></div>
+</div>
+
+<h2 class="section-title">Available <span>SUV</span> Vehicles</h2>
+
+<div class="car-grid">
+
+  <!-- 1. Hyundai Creta -->
+  <div class="car-card">
+    <div class="car-img-wrap">
+      <img src="suv1.jpg" onerror="this.src='https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=400'" alt="Hyundai Creta">
+      <div class="car-badge">SUV</div>
+    </div>
+    <div class="car-details">
+      <h3>Hyundai Creta</h3>
+      <div class="specs">
+        <div class="spec-item">⭐ 4.8</div>
+        <div class="spec-item">👥 5 Seats</div>
+        <div class="spec-item">⛽ Petrol</div>
+        <div class="spec-item">⚙ Automatic</div>
+        <div class="spec-item">🛣 17 km/l</div>
+      </div>
+      <div class="card-bottom">
+        <div class="price">₹2800 <span>/ Day</span></div>
+        <a href="booking.html?car=Hyundai Creta&rate=2800" class="book-btn">Book Now</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Kia Seltos -->
+  <div class="car-card">
+    <div class="car-img-wrap">
+      <img src="suv2.jpg" onerror="this.src='https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=400'" alt="Kia Seltos">
+      <div class="car-badge">SUV</div>
+    </div>
+    <div class="car-details">
+      <h3>Kia Seltos</h3>
+      <div class="specs">
+        <div class="spec-item">⭐ 4.7</div>
+        <div class="spec-item">👥 5 Seats</div>
+        <div class="spec-item">⛽ Petrol</div>
+        <div class="spec-item">⚙ Automatic</div>
+        <div class="spec-item">🛣 18 km/l</div>
+      </div>
+      <div class="card-bottom">
+        <div class="price">₹2900 <span>/ Day</span></div>
+        <a href="booking.html?car=Kia Seltos&rate=2900" class="book-btn">Book Now</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Tata Nexon -->
+  <div class="car-card">
+    <div class="car-img-wrap">
+      <img src="suv3.jpg" onerror="this.src='https://images.unsplash.com/photo-1502877338535-766e1452684a?w=400'" alt="Tata Nexon">
+      <div class="car-badge">SUV</div>
+    </div>
+    <div class="car-details">
+      <h3>Tata Nexon</h3>
+      <div class="specs">
+        <div class="spec-item">⭐ 4.7</div>
+        <div class="spec-item">👥 5 Seats</div>
+        <div class="spec-item">⛽ Petrol</div>
+        <div class="spec-item">⚙ Manual</div>
+        <div class="spec-item">🛣 17 km/l</div>
+      </div>
+      <div class="card-bottom">
+        <div class="price">₹2600 <span>/ Day</span></div>
+        <a href="booking.html?car=Tata Nexon&rate=2600" class="book-btn">Book Now</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. Mahindra XUV700 -->
+  <div class="car-card">
+    <div class="car-img-wrap">
+      <img src="suv4.jpg" onerror="this.src='https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=400'" alt="Mahindra XUV700">
+      <div class="car-badge">SUV</div>
+    </div>
+    <div class="car-details">
+      <h3>Mahindra XUV700</h3>
+      <div class="specs">
+        <div class="spec-item">⭐ 4.9</div>
+        <div class="spec-item">👥 7 Seats</div>
+        <div class="spec-item">⛽ Petrol</div>
+        <div class="spec-item">⚙ Automatic</div>
+        <div class="spec-item">🛣 15 km/l</div>
+      </div>
+      <div class="card-bottom">
+        <div class="price">₹3500 <span>/ Day</span></div>
+        <a href="booking.html?car=Mahindra XUV700&rate=3500" class="book-btn">Book Now</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. Mahindra Scorpio-N -->
+  <div class="car-card">
+    <div class="car-img-wrap">
+      <img src="suv5.jpg" onerror="this.src='https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=400'" alt="Mahindra Scorpio-N">
+      <div class="car-badge">SUV</div>
+    </div>
+    <div class="car-details">
+      <h3>Mahindra Scorpio-N</h3>
+      <div class="specs">
+        <div class="spec-item">⭐ 4.8</div>
+        <div class="spec-item">👥 7 Seats</div>
+        <div class="spec-item">⛽ Diesel</div>
+        <div class="spec-item">⚙ Manual</div>
+        <div class="spec-item">🛣 16 km/l</div>
+      </div>
+      <div class="card-bottom">
+        <div class="price">₹3400 <span>/ Day</span></div>
+        <a href="booking.html?car=Mahindra Scorpio-N&rate=3400" class="book-btn">Book Now</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. Toyota Urban Cruiser Hyryder -->
+  <div class="car-card">
+    <div class="car-img-wrap">
+      <img src="suv6.jpg" onerror="this.src='https://images.unsplash.com/photo-1555215695-3004980ad54e?w=400'" alt="Toyota Urban Cruiser Hyryder">
+      <div class="car-badge">SUV</div>
+    </div>
+    <div class="car-details">
+      <h3>Toyota Urban Cruiser Hyryder</h3>
+      <div class="specs">
+        <div class="spec-item">⭐ 4.7</div>
+        <div class="spec-item">👥 5 Seats</div>
+        <div class="spec-item">⛽ Petrol</div>
+        <div class="spec-item">⚙ Automatic</div>
+        <div class="spec-item">🛣 20 km/l</div>
+      </div>
+      <div class="card-bottom">
+        <div class="price">₹3200 <span>/ Day</span></div>
+        <a href="booking.html?car=Toyota Urban Cruiser Hyryder&rate=3200" class="book-btn">Book Now</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. Maruti Suzuki Grand Vitara -->
+  <div class="car-card">
+    <div class="car-img-wrap">
+      <img src="suv7.jpg" onerror="this.src='https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=400'" alt="Maruti Suzuki Grand Vitara">
+      <div class="car-badge">SUV</div>
+    </div>
+    <div class="car-details">
+      <h3>Maruti Suzuki Grand Vitara</h3>
+      <div class="specs">
+        <div class="spec-item">⭐ 4.8</div>
+        <div class="spec-item">👥 5 Seats</div>
+        <div class="spec-item">⛽ Petrol</div>
+        <div class="spec-item">⚙ Automatic</div>
+        <div class="spec-item">🛣 21 km/l</div>
+      </div>
+      <div class="card-bottom">
+        <div class="price">₹3100 <span>/ Day</span></div>
+        <a href="booking.html?car=Maruti Suzuki Grand Vitara&rate=3100" class="book-btn">Book Now</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8. Honda Elevate -->
+  <div class="car-card">
+    <div class="car-img-wrap">
+      <img src="suv8.jpg" onerror="this.src='https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=400'" alt="Honda Elevate">
+      <div class="car-badge">SUV</div>
+    </div>
+    <div class="car-details">
+      <h3>Honda Elevate</h3>
+      <div class="specs">
+        <div class="spec-item">⭐ 4.6</div>
+        <div class="spec-item">👥 5 Seats</div>
+        <div class="spec-item">⛽ Petrol</div>
+        <div class="spec-item">⚙ Manual</div>
+        <div class="spec-item">🛣 16 km/l</div>
+      </div>
+      <div class="card-bottom">
+        <div class="price">₹2700 <span>/ Day</span></div>
+        <a href="booking.html?car=Honda Elevate&rate=2700" class="book-btn">Book Now</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 9. MG Astor -->
+  <div class="car-card">
+    <div class="car-img-wrap">
+      <img src="suv9.jpg" onerror="this.src='https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?w=400'" alt="MG Astor">
+      <div class="car-badge">SUV</div>
+    </div>
+    <div class="car-details">
+      <h3>MG Astor</h3>
+      <div class="specs">
+        <div class="spec-item">⭐ 4.6</div>
+        <div class="spec-item">👥 5 Seats</div>
+        <div class="spec-item">⛽ Petrol</div>
+        <div class="spec-item">⚙ Automatic</div>
+        <div class="spec-item">🛣 15 km/l</div>
+      </div>
+      <div class="card-bottom">
+        <div class="price">₹2850 <span>/ Day</span></div>
+        <a href="booking.html?car=MG Astor&rate=2850" class="book-btn">Book Now</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 10. Volkswagen Taigun -->
+  <div class="car-card">
+    <div class="car-img-wrap">
+      <img src="suv10.jpg" onerror="this.src='https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=400'" alt="Volkswagen Taigun">
+      <div class="car-badge">SUV</div>
+    </div>
+    <div class="car-details">
+      <h3>Volkswagen Taigun</h3>
+      <div class="specs">
+        <div class="spec-item">⭐ 4.7</div>
+        <div class="spec-item">👥 5 Seats</div>
+        <div class="spec-item">⛽ Petrol</div>
+        <div class="spec-item">⚙ Automatic</div>
+        <div class="spec-item">🛣 18 km/l</div>
+      </div>
+      <div class="card-bottom">
+        <div class="price">₹3000 <span>/ Day</span></div>
+        <a href="booking.html?car=Volkswagen Taigun&rate=3000" class="book-btn">Book Now</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 11. Skoda Kushaq -->
+  <div class="car-card">
+    <div class="car-img-wrap">
+      <img src="suv11.jpg" onerror="this.src='https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=400'" alt="Skoda Kushaq">
+      <div class="car-badge">SUV</div>
+    </div>
+    <div class="car-details">
+      <h3>Skoda Kushaq</h3>
+      <div class="specs">
+        <div class="spec-item">⭐ 4.7</div>
+        <div class="spec-item">👥 5 Seats</div>
+        <div class="spec-item">⛽ Petrol</div>
+        <div class="spec-item">⚙ Automatic</div>
+        <div class="spec-item">🛣 17 km/l</div>
+      </div>
+      <div class="card-bottom">
+        <div class="price">₹2950 <span>/ Day</span></div>
+        <a href="booking.html?car=Skoda Kushaq&rate=2950" class="book-btn">Book Now</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 12. Toyota Fortuner -->
+  <div class="car-card">
+    <div class="car-img-wrap">
+      <img src="suv12.jpg" onerror="this.src='https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?w=400'" alt="Toyota Fortuner">
+      <div class="car-badge">SUV</div>
+    </div>
+    <div class="car-details">
+      <h3>Toyota Fortuner</h3>
+      <div class="specs">
+        <div class="spec-item">⭐ 4.9</div>
+        <div class="spec-item">👥 7 Seats</div>
+        <div class="spec-item">⛽ Diesel</div>
+        <div class="spec-item">⚙ Automatic</div>
+        <div class="spec-item">🛣 14 km/l</div>
+      </div>
+      <div class="card-bottom">
+        <div class="price">₹5000 <span>/ Day</span></div>
+        <a href="booking.html?car=Toyota Fortuner&rate=5000" class="book-btn">Book Now</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>© 2026 CarRental Booking System &nbsp;|&nbsp; Email: support@carrental.com</p>
+</footer>
+
+</body>
+</html>

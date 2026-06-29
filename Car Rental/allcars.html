@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>All Cars - CarRental</title>
+<style>
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+
+html { scroll-behavior: smooth; }
+
+body { background: #f4f4f4; animation: fadeIn 0.6s ease; }
+
+/* ── NAVBAR ── */
+nav {
+  background: #111; padding: 15px 8%;
+  display: flex; justify-content: space-between; align-items: center;
+  position: sticky; top: 0; z-index: 200;
+}
+.logo { color: white; font-size: 26px; font-weight: bold; }
+nav ul { display: flex; list-style: none; gap: 28px; }
+nav ul li a { color: white; text-decoration: none; font-size: 15px; transition: 0.2s; }
+nav ul li a:hover { color: orange; }
+
+/* ── HERO ── */
+.hero-banner {
+  height: 260px;
+  background:
+    linear-gradient(rgba(0,0,0,0.62), rgba(0,0,0,0.62)),
+    url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1400")
+    center/cover no-repeat;
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: center; text-align: center; color: white;
+}
+.hero-banner h1 { font-size: 42px; font-weight: bold; margin-bottom: 10px; }
+.hero-banner p  { font-size: 16px; color: #ddd; }
+.orange-line { width: 55px; height: 4px; background: orange; border-radius: 2px; margin: 12px auto 0; }
+
+/* ── SEARCH BAR ── */
+.search-wrap {
+  background: white; padding: 16px 5%;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  display: flex; gap: 10px; flex-wrap: wrap; align-items: center;
+}
+.search-wrap input {
+  flex: 1; min-width: 220px; padding: 11px 16px;
+  border: 1px solid #ddd; border-radius: 8px; font-size: 15px;
+}
+.search-wrap input:focus { outline: none; border-color: orange; }
+.search-wrap select {
+  padding: 11px 14px; border: 1px solid #ddd; border-radius: 8px;
+  font-size: 14px; background: white; cursor: pointer;
+}
+.search-wrap select:focus { outline: none; border-color: orange; }
+.clear-btn {
+  padding: 11px 20px; background: #111; color: white;
+  border: none; border-radius: 8px; font-size: 14px;
+  font-weight: bold; cursor: pointer; transition: 0.2s; white-space: nowrap;
+}
+.clear-btn:hover { background: #333; }
+
+/* ── MAIN LAYOUT ── */
+.page-body {
+  display: flex; gap: 24px;
+  padding: 28px 5%; max-width: 1400px; margin: auto;
+}
+
+/* ── SIDEBAR ── */
+.sidebar {
+  width: 260px; flex-shrink: 0;
+}
+
+.filter-card {
+  background: white; border-radius: 12px;
+  padding: 20px; margin-bottom: 18px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+}
+
+.filter-card h3 {
+  font-size: 14px; font-weight: bold; color: #111;
+  text-transform: uppercase; letter-spacing: 1px;
+  margin-bottom: 14px; padding-bottom: 10px;
+  border-bottom: 2px solid orange;
+}
+
+/* Category filter */
+.cat-btn {
+  display: block; width: 100%; padding: 9px 14px;
+  background: #f8f8f8; border: 1px solid #eee; border-radius: 7px;
+  font-size: 14px; font-weight: bold; color: #444;
+  cursor: pointer; margin-bottom: 8px; text-align: left;
+  transition: 0.2s;
+}
+.cat-btn:hover, .cat-btn.active { background: orange; color: white; border-color: orange; }
+
+/* Seat filter */
+.seat-options { display: flex; flex-wrap: wrap; gap: 8px; }
+.seat-btn {
+  padding: 7px 14px; border: 1px solid #ddd; border-radius: 20px;
+  font-size: 13px; cursor: pointer; background: white;
+  transition: 0.2s; font-weight: bold; color: #555;
+}
+.seat-btn:hover, .seat-btn.active { background: orange; color: white; border-color: orange; }
+
+/* Fuel filter */
+.fuel-options { display: flex; flex-wrap: wrap; gap: 8px; }
+.fuel-btn {
+  padding: 7px 14px; border: 1px solid #ddd; border-radius: 20px;
+  font-size: 13px; cursor: pointer; background: white;
+  transition: 0.2s; font-weight: bold; color: #555;
+}
+.fuel-btn:hover, .fuel-btn.active { background: orange; color: white; border-color: orange; }
+
+/* Transmission */
+.trans-options { display: flex; gap: 8px; }
+.trans-btn {
+  flex: 1; padding: 8px; border: 1px solid #ddd; border-radius: 7px;
+  font-size: 13px; cursor: pointer; background: white;
+  transition: 0.2s; font-weight: bold; color: #555; text-align: center;
+}
+.trans-btn:hover, .trans-btn.active { background: orange; color: white; border-color: orange; }
+
+/* Price range */
+.range-wrap { padding: 4px 0; }
+.range-labels { display: flex; justify-content: space-between; font-size: 13px; color: #777; margin-bottom: 8px; }
+.range-labels span { font-weight: bold; color: #111; }
+input[type="range"] {
+  width: 100%; accent-color: orange; cursor: pointer;
+}
+
+/* Rating filter */
+.rating-options { display: flex; flex-wrap: wrap; gap: 8px; }
+.rating-btn {
+  padding: 7px 12px; border: 1px solid #ddd; border-radius: 20px;
+  font-size: 13px; cursor: pointer; background: white;
+  transition: 0.2s; font-weight: bold; color: #555;
+}
+.rating-btn:hover, .rating-btn.active { background: orange; color: white; border-color: orange; }
+
+/* Mileage range */
+.mileage-labels { display: flex; justify-content: space-between; font-size: 13px; color: #777; margin-bottom: 8px; }
+.mileage-labels span { font-weight: bold; color: #111; }
+
+/* ── RESULTS AREA ── */
+.results-area { flex: 1; min-width: 0; }
+
+.results-header {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 18px; flex-wrap: wrap; gap: 10px;
+}
+
+.results-count { font-size: 15px; color: #555; }
+.results-count strong { color: #111; font-size: 18px; }
+
+.sort-select {
+  padding: 9px 14px; border: 1px solid #ddd; border-radius: 8px;
+  font-size: 14px; background: white; cursor: pointer;
+}
+.sort-select:focus { outline: none; border-color: orange; }
+
+/* ── CAR GRID ── */
+.car-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 22px;
+}
+
+.car-card {
+  background: white; border-radius: 14px; overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.09);
+  transition: transform 0.3s, box-shadow 0.3s;
+  display: flex; flex-direction: column;
+}
+.car-card:hover { transform: translateY(-5px); box-shadow: 0 10px 26px rgba(0,0,0,0.14); }
+
+.car-img-wrap { position: relative; height: 165px; overflow: hidden; background: #eee; }
+.car-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
+.car-card:hover .car-img-wrap img { transform: scale(1.06); }
+
+.car-badge {
+  position: absolute; top: 10px; left: 10px;
+  font-size: 11px; font-weight: bold; padding: 3px 10px; border-radius: 20px; color: white;
+}
+.badge-economy  { background: #16a34a; }
+.badge-sedan    { background: #2563eb; }
+.badge-suv      { background: #7c3aed; }
+.badge-luxury   { background: #b8860b; }
+
+.wishlist-btn {
+  position: absolute; top: 10px; right: 10px;
+  width: 32px; height: 32px; border-radius: 50%;
+  background: rgba(255,255,255,0.9); border: none;
+  font-size: 16px; cursor: pointer; display: flex;
+  align-items: center; justify-content: center;
+  transition: 0.2s; box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+.wishlist-btn:hover { background: white; transform: scale(1.1); }
+.wishlist-btn.liked { color: red; }
+
+.car-details { padding: 14px; flex: 1; display: flex; flex-direction: column; }
+.car-details h3 { font-size: 15px; font-weight: bold; color: #111; margin-bottom: 8px; }
+
+.specs { display: grid; grid-template-columns: 1fr 1fr; gap: 5px 8px; margin-bottom: 10px; }
+.spec-item { font-size: 12px; color: #555; display: flex; align-items: center; gap: 4px; }
+
+.card-bottom {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: auto; padding-top: 10px; border-top: 1px solid #f0f0f0;
+}
+.price { font-size: 18px; font-weight: bold; color: orange; }
+.price span { font-size: 11px; color: #999; font-weight: normal; }
+
+.book-btn {
+  padding: 8px 14px; background: orange; border: none;
+  border-radius: 7px; font-size: 13px; font-weight: bold;
+  color: white; cursor: pointer; transition: 0.3s;
+  text-decoration: none; display: inline-block;
+}
+.book-btn:hover { background: #e69500; }
+.book-btn.luxury-btn { background: #111; }
+.book-btn.luxury-btn:hover { background: #333; }
+
+/* ── EMPTY STATE ── */
+.empty-state {
+  grid-column: 1/-1; text-align: center;
+  padding: 60px 20px; color: #999;
+}
+.empty-state .empty-icon { font-size: 60px; margin-bottom: 16px; }
+.empty-state h3 { font-size: 20px; color: #555; margin-bottom: 8px; }
+.empty-state p { font-size: 14px; }
+
+/* ── COMPARE BAR ── */
+.compare-bar {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: #111; color: white;
+  padding: 14px 5%; display: flex;
+  justify-content: space-between; align-items: center;
+  transform: translateY(100%); transition: 0.3s; z-index: 300;
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.3);
+}
+.compare-bar.show { transform: translateY(0); }
+.compare-slots { display: flex; gap: 14px; align-items: center; }
+.compare-slot {
+  background: #222; border: 1px solid #444; border-radius: 8px;
+  padding: 8px 14px; font-size: 13px; color: #ccc; min-width: 160px;
+}
+.compare-slot.filled { border-color: orange; color: white; }
+.compare-actions { display: flex; gap: 10px; }
+.compare-go-btn {
+  padding: 10px 22px; background: orange; color: white;
+  border: none; border-radius: 8px; font-weight: bold;
+  font-size: 14px; cursor: pointer; transition: 0.2s;
+}
+.compare-go-btn:hover { background: #e69500; }
+.compare-clear-btn {
+  padding: 10px 16px; background: #333; color: white;
+  border: none; border-radius: 8px; font-size: 14px; cursor: pointer;
+}
+.compare-clear-btn:hover { background: #555; }
+
+/* ── COMPARE PAGE ── */
+#comparePage {
+  display: none; position: fixed; inset: 0;
+  background: #f4f4f4; z-index: 400; overflow-y: auto; padding: 30px 5%;
+}
+#comparePage h2 { font-size: 28px; margin-bottom: 20px; }
+.compare-close {
+  float: right; background: #111; color: white;
+  border: none; border-radius: 8px; padding: 10px 20px;
+  font-size: 14px; cursor: pointer; margin-bottom: 20px;
+}
+.compare-table-wrap { overflow-x: auto; }
+.compare-table { width: 100%; border-collapse: collapse; background: white; border-radius: 12px; overflow: hidden; }
+.compare-table th { background: #111; color: white; padding: 14px 16px; font-size: 14px; text-align: left; }
+.compare-table td { padding: 12px 16px; border-bottom: 1px solid #eee; font-size: 14px; color: #444; }
+.compare-table tr:last-child td { border-bottom: none; }
+.compare-table td:first-child { font-weight: bold; color: #111; background: #f8f8f8; }
+.compare-table .highlight { color: orange; font-weight: bold; }
+
+/* ── FOOTER ── */
+footer { background: #111; color: white; text-align: center; padding: 20px; margin-top: 40px; }
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+@media (max-width: 900px) {
+  .page-body { flex-direction: column; padding: 16px; }
+  .sidebar { width: 100%; }
+  .car-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
+}
+@media (max-width: 600px) {
+  nav { flex-direction: column; gap: 12px; }
+  .hero-banner h1 { font-size: 28px; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="logo">CarRental</div>
+  <ul>
+    <li><a href="Car_home.html">Home</a></li>
+    <li><a href="allcars.html">All Cars</a></li>
+    <li><a href="booking.html">Bookings</a></li>
+    <li><a href="login.html">Login</a></li>
+    <li><a href="account.html">My Account</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero-banner">
+  <h1>Browse All Cars</h1>
+  <p>48 vehicles across Economy, Sedan, SUV & Luxury — find your perfect ride</p>
+  <div class="orange-line"></div>
+</div>
+
+<!-- SEARCH BAR -->
+<div class="search-wrap">
+  <input type="text" id="searchInput" placeholder="🔍  Search by car name...">
+  <select id="sortSelect" class="sort-select">
+    <option value="">Sort By</option>
+    <option value="price-asc">Price: Low to High</option>
+    <option value="price-desc">Price: High to Low</option>
+    <option value="rating-desc">Rating: Best First</option>
+    <option value="mileage-desc">Mileage: Best First</option>
+    <option value="name-asc">Name: A to Z</option>
+  </select>
+  <button class="clear-btn" onclick="clearAllFilters()">✕ Clear Filters</button>
+</div>
+
+<!-- MAIN BODY -->
+<div class="page-body">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+
+    <!-- Category -->
+    <div class="filter-card">
+      <h3>Category</h3>
+      <button class="cat-btn active" data-cat="all" onclick="setCat(this,'all')">🚘 All Cars (48)</button>
+      <button class="cat-btn" data-cat="economy" onclick="setCat(this,'economy')">💚 Economy (12)</button>
+      <button class="cat-btn" data-cat="sedan" onclick="setCat(this,'sedan')">💙 Sedan (12)</button>
+      <button class="cat-btn" data-cat="suv" onclick="setCat(this,'suv')">💜 SUV (12)</button>
+      <button class="cat-btn" data-cat="luxury" onclick="setCat(this,'luxury')">⭐ Luxury (12)</button>
+    </div>
+
+    <!-- Seats -->
+    <div class="filter-card">
+      <h3>Passengers</h3>
+      <div class="seat-options">
+        <button class="seat-btn active" data-seats="all" onclick="setSeat(this,'all')">All</button>
+        <button class="seat-btn" data-seats="5" onclick="setSeat(this,'5')">5 Seats</button>
+        <button class="seat-btn" data-seats="7" onclick="setSeat(this,'7')">7 Seats</button>
+      </div>
+    </div>
+
+    <!-- Fuel -->
+    <div class="filter-card">
+      <h3>Fuel Type</h3>
+      <div class="fuel-options">
+        <button class="fuel-btn active" data-fuel="all" onclick="setFuel(this,'all')">All</button>
+        <button class="fuel-btn" data-fuel="Petrol" onclick="setFuel(this,'Petrol')">⛽ Petrol</button>
+        <button class="fuel-btn" data-fuel="Diesel" onclick="setFuel(this,'Diesel')">🛢 Diesel</button>
+        <button class="fuel-btn" data-fuel="Hybrid" onclick="setFuel(this,'Hybrid')">🌿 Hybrid</button>
+      </div>
+    </div>
+
+    <!-- Transmission -->
+    <div class="filter-card">
+      <h3>Transmission</h3>
+      <div class="trans-options">
+        <button class="trans-btn active" data-trans="all" onclick="setTrans(this,'all')">All</button>
+        <button class="trans-btn" data-trans="Automatic" onclick="setTrans(this,'Automatic')">Auto</button>
+        <button class="trans-btn" data-trans="Manual" onclick="setTrans(this,'Manual')">Manual</button>
+      </div>
+    </div>
+
+    <!-- Price Range -->
+    <div class="filter-card">
+      <h3>Max Price / Day</h3>
+      <div class="range-wrap">
+        <div class="range-labels">Up to: <span id="priceLabel">₹18,000</span></div>
+        <input type="range" id="priceRange" min="1200" max="18000" step="100" value="18000" oninput="updatePriceLabel()">
+      </div>
+    </div>
+
+    <!-- Mileage -->
+    <div class="filter-card">
+      <h3>Min Mileage (km/l)</h3>
+      <div class="range-wrap">
+        <div class="mileage-labels">At least: <span id="mileageLabel">10 km/l</span></div>
+        <input type="range" id="mileageRange" min="10" max="26" step="1" value="10" oninput="updateMileageLabel()">
+      </div>
+    </div>
+
+    <!-- Rating -->
+    <div class="filter-card">
+      <h3>Min Rating</h3>
+      <div class="rating-options">
+        <button class="rating-btn active" data-rating="0" onclick="setRating(this,0)">All</button>
+        <button class="rating-btn" data-rating="4.5" onclick="setRating(this,4.5)">⭐ 4.5+</button>
+        <button class="rating-btn" data-rating="4.7" onclick="setRating(this,4.7)">⭐ 4.7+</button>
+        <button class="rating-btn" data-rating="4.9" onclick="setRating(this,4.9)">⭐ 4.9+</button>
+      </div>
+    </div>
+
+    <!-- Compare info -->
+    <div class="filter-card" style="background:#fff8ee;border:1px solid orange;">
+      <h3 style="color:orange;">Compare Cars</h3>
+      <p style="font-size:13px;color:#555;line-height:1.6;">Click the <strong>⚖</strong> icon on any card to add it to compare (max 3). Then tap <strong>Compare Now</strong> to see a side-by-side table.</p>
+    </div>
+
+  </aside>
+
+  <!-- RESULTS -->
+  <div class="results-area">
+    <div class="results-header">
+      <div class="results-count"><strong id="resultCount">48</strong> cars found</div>
+      <select class="sort-select" id="sortSelect2" onchange="document.getElementById('sortSelect').value=this.value;applyFilters()">
+        <option value="">Sort By</option>
+        <option value="price-asc">Price: Low to High</option>
+        <option value="price-desc">Price: High to Low</option>
+        <option value="rating-desc">Rating: Best First</option>
+        <option value="mileage-desc">Mileage: Best First</option>
+        <option value="name-asc">Name: A to Z</option>
+      </select>
+    </div>
+    <div class="car-grid" id="carGrid"></div>
+  </div>
+
+</div>
+
+<!-- COMPARE BAR -->
+<div class="compare-bar" id="compareBar">
+  <div class="compare-slots" id="compareSlots"></div>
+  <div class="compare-actions">
+    <button class="compare-go-btn" onclick="showCompare()">⚖ Compare Now</button>
+    <button class="compare-clear-btn" onclick="clearCompare()">✕ Clear</button>
+  </div>
+</div>
+
+<!-- COMPARE PAGE -->
+<div id="comparePage">
+  <button class="compare-close" onclick="closeCompare()">✕ Close</button>
+  <h2>⚖ Car Comparison</h2>
+  <div class="compare-table-wrap">
+    <table class="compare-table" id="compareTable"></table>
+  </div>
+</div>
+
+<footer>
+  <p>© 2026 CarRental Booking System &nbsp;|&nbsp; Email: support@carrental.com</p>
+</footer>
+
+<script>
+
+/* ══════════════════════════════════════
+   ALL 48 CARS DATA
+══════════════════════════════════════ */
+const ALL_CARS = [
+  // ── ECONOMY (12) ──
+  { name:"Maruti Alto K10",       cat:"economy", seats:5, fuel:"Petrol",  trans:"Manual",    mileage:24, rating:4.5, price:1200,  img:"eco1.jpg",  fallback:"https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=400" },
+  { name:"Renault Kwid",          cat:"economy", seats:5, fuel:"Petrol",  trans:"Manual",    mileage:22, rating:4.4, price:1300,  img:"eco2.jpg",  fallback:"https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=400" },
+  { name:"Maruti S-Presso",       cat:"economy", seats:5, fuel:"Petrol",  trans:"Manual",    mileage:25, rating:4.3, price:1350,  img:"eco3.png",  fallback:"https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?w=400" },
+  { name:"Tata Tiago",            cat:"economy", seats:5, fuel:"Petrol",  trans:"Manual",    mileage:20, rating:4.6, price:1400,  img:"eco4.jpg",  fallback:"https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?w=400" },
+  { name:"Hyundai Grand i10 Nios",cat:"economy", seats:5, fuel:"Petrol",  trans:"Automatic", mileage:21, rating:4.7, price:1500,  img:"eco5.jpg",  fallback:"https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=400" },
+  { name:"Maruti WagonR",         cat:"economy", seats:5, fuel:"Petrol",  trans:"Manual",    mileage:24, rating:4.4, price:1450,  img:"eco6.jpg",  fallback:"https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=400" },
+  { name:"Citroen C3",            cat:"economy", seats:5, fuel:"Petrol",  trans:"Manual",    mileage:19, rating:4.5, price:1600,  img:"eco7.jpg",  fallback:"https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=400" },
+  { name:"Tata Punch",            cat:"economy", seats:5, fuel:"Petrol",  trans:"Manual",    mileage:20, rating:4.8, price:1700,  img:"eco8.jpg",  fallback:"https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=400" },
+  { name:"Hyundai Exter",         cat:"economy", seats:5, fuel:"Petrol",  trans:"Automatic", mileage:19, rating:4.7, price:1750,  img:"eco9.jpg",  fallback:"https://images.unsplash.com/photo-1502877338535-766e1452684a?w=400" },
+  { name:"Nissan Magnite",        cat:"economy", seats:5, fuel:"Petrol",  trans:"Manual",    mileage:20, rating:4.6, price:1800,  img:"eco10.jpg", fallback:"https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=400" },
+  { name:"Maruti Suzuki Celerio", cat:"economy", seats:5, fuel:"Petrol",  trans:"Automatic", mileage:26, rating:4.5, price:1650,  img:"eco11.jpg", fallback:"https://images.unsplash.com/photo-1547245324-d777c6f05e80?w=400" },
+  { name:"Hyundai Santro",        cat:"economy", seats:5, fuel:"Petrol",  trans:"Manual",    mileage:21, rating:4.4, price:1550,  img:"eco12.jpg", fallback:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400" },
+
+  // ── SEDAN (12) ──
+  { name:"Honda City",            cat:"sedan",   seats:5, fuel:"Petrol",  trans:"Automatic", mileage:18, rating:4.8, price:2200,  img:"sed1.jpg",  fallback:"https://images.unsplash.com/photo-1555215695-3004980ad54e?w=400" },
+  { name:"Hyundai Verna",         cat:"sedan",   seats:5, fuel:"Petrol",  trans:"Automatic", mileage:20, rating:4.7, price:2300,  img:"sed2.jpg",  fallback:"https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=400" },
+  { name:"Maruti Suzuki Ciaz",    cat:"sedan",   seats:5, fuel:"Petrol",  trans:"Manual",    mileage:21, rating:4.6, price:2100,  img:"sed3.jpg",  fallback:"https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?w=400" },
+  { name:"Volkswagen Virtus",     cat:"sedan",   seats:5, fuel:"Petrol",  trans:"Automatic", mileage:19, rating:4.8, price:2500,  img:"sed4.jpg",  fallback:"https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?w=400" },
+  { name:"Skoda Slavia",          cat:"sedan",   seats:5, fuel:"Petrol",  trans:"Automatic", mileage:18, rating:4.7, price:2450,  img:"sed5.jpg",  fallback:"https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=400" },
+  { name:"Honda Amaze",           cat:"sedan",   seats:5, fuel:"Petrol",  trans:"Manual",    mileage:19, rating:4.5, price:1900,  img:"sed6.jpg",  fallback:"https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=400" },
+  { name:"Hyundai Aura",          cat:"sedan",   seats:5, fuel:"Petrol",  trans:"Manual",    mileage:21, rating:4.4, price:1800,  img:"sed7.jpg",  fallback:"https://images.unsplash.com/photo-1547245324-d777c6f05e80?w=400" },
+  { name:"Maruti Suzuki Dzire",   cat:"sedan",   seats:5, fuel:"Petrol",  trans:"Automatic", mileage:24, rating:4.7, price:2000,  img:"sed8.jpg",  fallback:"https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=400" },
+  { name:"Tata Tigor",            cat:"sedan",   seats:5, fuel:"Petrol",  trans:"Manual",    mileage:20, rating:4.5, price:1850,  img:"sed9.jpg",  fallback:"https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=400" },
+  { name:"Toyota Yaris",          cat:"sedan",   seats:5, fuel:"Petrol",  trans:"Automatic", mileage:17, rating:4.6, price:2400,  img:"sed10.jpg", fallback:"https://images.unsplash.com/photo-1502877338535-766e1452684a?w=400" },
+  { name:"Nissan Sunny",          cat:"sedan",   seats:5, fuel:"Petrol",  trans:"Manual",    mileage:18, rating:4.4, price:1950,  img:"sed11.jpg", fallback:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400" },
+  { name:"Hyundai Elantra",       cat:"sedan",   seats:5, fuel:"Petrol",  trans:"Automatic", mileage:16, rating:4.8, price:2800,  img:"sed12.jpg", fallback:"https://images.unsplash.com/photo-1609521263047-f8f205293f24?w=400" },
+
+  // ── SUV (12) ──
+  { name:"Hyundai Creta",                  cat:"suv", seats:5, fuel:"Petrol", trans:"Automatic", mileage:17, rating:4.8, price:2800,  img:"suv1.jpg",  fallback:"https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=400" },
+  { name:"Kia Seltos",                     cat:"suv", seats:5, fuel:"Petrol", trans:"Automatic", mileage:18, rating:4.7, price:2900,  img:"suv2.jpg",  fallback:"https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=400" },
+  { name:"Tata Nexon",                     cat:"suv", seats:5, fuel:"Petrol", trans:"Manual",    mileage:17, rating:4.7, price:2600,  img:"suv3.jpg",  fallback:"https://images.unsplash.com/photo-1502877338535-766e1452684a?w=400" },
+  { name:"Mahindra XUV700",               cat:"suv", seats:7, fuel:"Petrol", trans:"Automatic", mileage:15, rating:4.9, price:3500,  img:"suv4.jpg",  fallback:"https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=400" },
+  { name:"Mahindra Scorpio-N",            cat:"suv", seats:7, fuel:"Diesel", trans:"Manual",    mileage:16, rating:4.8, price:3400,  img:"suv5.jpg",  fallback:"https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=400" },
+  { name:"Toyota Urban Cruiser Hyryder",  cat:"suv", seats:5, fuel:"Petrol", trans:"Automatic", mileage:20, rating:4.7, price:3200,  img:"suv6.jpg",  fallback:"https://images.unsplash.com/photo-1555215695-3004980ad54e?w=400" },
+  { name:"Maruti Suzuki Grand Vitara",    cat:"suv", seats:5, fuel:"Petrol", trans:"Automatic", mileage:21, rating:4.8, price:3100,  img:"suv7.jpg",  fallback:"https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=400" },
+  { name:"Honda Elevate",                 cat:"suv", seats:5, fuel:"Petrol", trans:"Manual",    mileage:16, rating:4.6, price:2700,  img:"suv8.jpg",  fallback:"https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=400" },
+  { name:"MG Astor",                      cat:"suv", seats:5, fuel:"Petrol", trans:"Automatic", mileage:15, rating:4.6, price:2850,  img:"suv9.jpg",  fallback:"https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?w=400" },
+  { name:"Volkswagen Taigun",             cat:"suv", seats:5, fuel:"Petrol", trans:"Automatic", mileage:18, rating:4.7, price:3000,  img:"suv10.jpg", fallback:"https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=400" },
+  { name:"Skoda Kushaq",                  cat:"suv", seats:5, fuel:"Petrol", trans:"Automatic", mileage:17, rating:4.7, price:2950,  img:"suv11.jpg", fallback:"https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=400" },
+  { name:"Toyota Fortuner",               cat:"suv", seats:7, fuel:"Diesel", trans:"Automatic", mileage:14, rating:4.9, price:5000,  img:"suv12.jpg", fallback:"https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?w=400" },
+
+  // ── LUXURY (12) ──
+  { name:"BMW 7 Series",          cat:"luxury", seats:5, fuel:"Petrol", trans:"Automatic", mileage:12, rating:4.9, price:8500,  img:"lux1.jpg",  fallback:"https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=400" },
+  { name:"Mercedes-Benz E-Class", cat:"luxury", seats:5, fuel:"Petrol", trans:"Automatic", mileage:13, rating:4.9, price:9000,  img:"lux2.jpg",  fallback:"https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=400" },
+  { name:"Audi A6",               cat:"luxury", seats:5, fuel:"Petrol", trans:"Automatic", mileage:14, rating:4.8, price:8800,  img:"lux3.jpg",  fallback:"https://images.unsplash.com/photo-1555215695-3004980ad54e?w=400" },
+  { name:"BMW X5",                cat:"luxury", seats:7, fuel:"Diesel", trans:"Automatic", mileage:12, rating:4.9, price:12000, img:"lux4.jpg",  fallback:"https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=400" },
+  { name:"Mercedes-Benz GLE",     cat:"luxury", seats:7, fuel:"Diesel", trans:"Automatic", mileage:11, rating:4.8, price:12500, img:"lux5.jpg",  fallback:"https://images.unsplash.com/photo-1502877338535-766e1452684a?w=400" },
+  { name:"Audi Q7",               cat:"luxury", seats:7, fuel:"Petrol", trans:"Automatic", mileage:11, rating:4.9, price:13000, img:"lux6.jpg",  fallback:"https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=400" },
+  { name:"Range Rover Velar",     cat:"luxury", seats:5, fuel:"Petrol", trans:"Automatic", mileage:10, rating:4.9, price:15000, img:"lux7.jpg",  fallback:"https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=400" },
+  { name:"Jaguar F-Pace",         cat:"luxury", seats:5, fuel:"Petrol", trans:"Automatic", mileage:12, rating:4.8, price:14000, img:"lux8.jpg",  fallback:"https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=400" },
+  { name:"Porsche Cayenne",       cat:"luxury", seats:5, fuel:"Petrol", trans:"Automatic", mileage:10, rating:5.0, price:18000, img:"lux9.jpg",  fallback:"https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=400" },
+  { name:"Lexus ES 300h",         cat:"luxury", seats:5, fuel:"Hybrid", trans:"Automatic", mileage:20, rating:4.8, price:11000, img:"lux10.jpg", fallback:"https://images.unsplash.com/photo-1555215695-3004980ad54e?w=400" },
+  { name:"Volvo XC90",            cat:"luxury", seats:7, fuel:"Hybrid", trans:"Automatic", mileage:17, rating:4.9, price:14500, img:"lux11.jpg", fallback:"https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?w=400" },
+  { name:"Toyota Vellfire",       cat:"luxury", seats:7, fuel:"Hybrid", trans:"Automatic", mileage:16, rating:4.9, price:16000, img:"lux12.jpg", fallback:"https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=400" },
+];
+
+/* ── BADGE LABELS ── */
+const BADGE = {
+  economy: { label:"Economy", cls:"badge-economy" },
+  sedan:   { label:"Sedan",   cls:"badge-sedan"   },
+  suv:     { label:"SUV",     cls:"badge-suv"      },
+  luxury:  { label:"✦ Luxury",cls:"badge-luxury"   },
+};
+
+/* ── STATE ── */
+let filters = { cat:"all", seats:"all", fuel:"all", trans:"all", price:18000, mileage:10, rating:0 };
+let wishlist = new Set();
+let compareList = [];
+
+/* ── RENDER ── */
+function applyFilters() {
+  const search  = document.getElementById('searchInput').value.trim().toLowerCase();
+  const sort    = document.getElementById('sortSelect').value;
+
+  let result = ALL_CARS.filter(c => {
+    if (filters.cat   !== 'all' && c.cat   !== filters.cat)                    return false;
+    if (filters.seats !== 'all' && c.seats !== parseInt(filters.seats))         return false;
+    if (filters.fuel  !== 'all' && c.fuel  !== filters.fuel)                   return false;
+    if (filters.trans !== 'all' && c.trans !== filters.trans)                  return false;
+    if (c.price   > filters.price)                                             return false;
+    if (c.mileage < filters.mileage)                                           return false;
+    if (c.rating  < filters.rating)                                            return false;
+    if (search && !c.name.toLowerCase().includes(search))                      return false;
+    return true;
+  });
+
+  // Sort
+  if (sort === 'price-asc')     result.sort((a,b) => a.price   - b.price);
+  if (sort === 'price-desc')    result.sort((a,b) => b.price   - a.price);
+  if (sort === 'rating-desc')   result.sort((a,b) => b.rating  - a.rating);
+  if (sort === 'mileage-desc')  result.sort((a,b) => b.mileage - a.mileage);
+  if (sort === 'name-asc')      result.sort((a,b) => a.name.localeCompare(b.name));
+
+  renderCards(result);
+  document.getElementById('resultCount').textContent = result.length;
+}
+
+function renderCards(cars) {
+  const grid = document.getElementById('carGrid');
+  if (cars.length === 0) {
+    grid.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">🔍</div>
+        <h3>No cars match your filters</h3>
+        <p>Try adjusting or clearing the filters.</p>
+      </div>`;
+    return;
+  }
+
+  grid.innerHTML = cars.map((c, i) => {
+    const b    = BADGE[c.cat];
+    const isW  = wishlist.has(c.name);
+    const inCmp = compareList.find(x => x.name === c.name);
+    const isLux = c.cat === 'luxury';
+    return `
+    <div class="car-card" id="card-${i}">
+      <div class="car-img-wrap">
+        <img src="${c.img}" onerror="this.src='${c.fallback}'" alt="${c.name}">
+        <div class="car-badge ${b.cls}">${b.label}</div>
+        <button class="wishlist-btn ${isW ? 'liked' : ''}" onclick="toggleWish('${c.name}',this)" title="Wishlist">
+          ${isW ? '❤️' : '🤍'}
+        </button>
+      </div>
+      <div class="car-details">
+        <h3>${c.name}</h3>
+        <div class="specs">
+          <div class="spec-item">⭐ ${c.rating}</div>
+          <div class="spec-item">👥 ${c.seats} Seats</div>
+          <div class="spec-item">⛽ ${c.fuel}</div>
+          <div class="spec-item">⚙ ${c.trans}</div>
+          <div class="spec-item">🛣 ${c.mileage} km/l</div>
+        </div>
+        <div class="card-bottom">
+          <div class="price">₹${c.price.toLocaleString('en-IN')} <span>/ Day</span></div>
+          <div style="display:flex;gap:6px;align-items:center;">
+            <button onclick="toggleCompare(${JSON.stringify(c).replace(/"/g,"'")})" title="Compare"
+              style="padding:7px 10px;border:1px solid ${inCmp ? 'orange':'#ddd'};background:${inCmp ? '#fff8ee':'white'};border-radius:7px;cursor:pointer;font-size:14px;">
+              ⚖
+            </button>
+            <a href="booking.html?car=${encodeURIComponent(c.name)}&rate=${c.price}" class="book-btn ${isLux ? 'luxury-btn' : ''}">Book</a>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+/* ── WISHLIST ── */
+function toggleWish(name, btn) {
+  if (wishlist.has(name)) {
+    wishlist.delete(name);
+    btn.innerHTML = '🤍';
+    btn.classList.remove('liked');
+  } else {
+    wishlist.add(name);
+    btn.innerHTML = '❤️';
+    btn.classList.add('liked');
+  }
+}
+
+/* ── COMPARE ── */
+function toggleCompare(car) {
+  const idx = compareList.findIndex(c => c.name === car.name);
+  if (idx > -1) {
+    compareList.splice(idx, 1);
+  } else {
+    if (compareList.length >= 3) {
+      alert('You can compare up to 3 cars at a time.'); return;
+    }
+    compareList.push(car);
+  }
+  updateCompareBar();
+  applyFilters();
+}
+
+function updateCompareBar() {
+  const bar   = document.getElementById('compareBar');
+  const slots = document.getElementById('compareSlots');
+  if (compareList.length === 0) {
+    bar.classList.remove('show'); return;
+  }
+  bar.classList.add('show');
+  const filled = compareList.map(c => `<div class="compare-slot filled">🚗 ${c.name}</div>`).join('');
+  const empty  = Array(3 - compareList.length).fill('<div class="compare-slot">+ Add a car</div>').join('');
+  slots.innerHTML = `<span style="color:#aaa;font-size:13px;margin-right:6px;">Comparing:</span>${filled}${empty}`;
+}
+
+function clearCompare() {
+  compareList = [];
+  updateCompareBar();
+  applyFilters();
+}
+
+function showCompare() {
+  if (compareList.length < 2) { alert('Add at least 2 cars to compare.'); return; }
+  const rows = [
+    ['Category',     c => c.cat.charAt(0).toUpperCase() + c.cat.slice(1)],
+    ['Price / Day',  c => '₹' + c.price.toLocaleString('en-IN')],
+    ['Rating',       c => '⭐ ' + c.rating],
+    ['Seats',        c => c.seats + ' Seats'],
+    ['Fuel',         c => c.fuel],
+    ['Transmission', c => c.trans],
+    ['Mileage',      c => c.mileage + ' km/l'],
+  ];
+
+  const header = '<tr><th>Feature</th>' + compareList.map(c => `<th>${c.name}</th>`).join('') + '</tr>';
+  const body   = rows.map(([label, fn]) => {
+    const vals = compareList.map(fn);
+    // Highlight best price (lowest) and best mileage/rating (highest)
+    let cells = vals.map((v, i) => {
+      let hi = '';
+      if (label === 'Price / Day') {
+        const nums = compareList.map(c => c.price);
+        if (compareList[i].price === Math.min(...nums)) hi = 'highlight';
+      }
+      if (label === 'Mileage') {
+        const nums = compareList.map(c => c.mileage);
+        if (compareList[i].mileage === Math.max(...nums)) hi = 'highlight';
+      }
+      if (label === 'Rating') {
+        const nums = compareList.map(c => c.rating);
+        if (compareList[i].rating === Math.max(...nums)) hi = 'highlight';
+      }
+      return `<td class="${hi}">${v}</td>`;
+    }).join('');
+    return `<tr><td>${label}</td>${cells}</tr>`;
+  }).join('');
+
+  document.getElementById('compareTable').innerHTML = header + body;
+  document.getElementById('comparePage').style.display = 'block';
+  document.body.style.overflow = 'hidden';
+}
+
+function closeCompare() {
+  document.getElementById('comparePage').style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+/* ── FILTER SETTERS ── */
+function setCat(btn, val) {
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  filters.cat = val;
+  applyFilters();
+}
+
+function setSeat(btn, val) {
+  document.querySelectorAll('.seat-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  filters.seats = val;
+  applyFilters();
+}
+
+function setFuel(btn, val) {
+  document.querySelectorAll('.fuel-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  filters.fuel = val;
+  applyFilters();
+}
+
+function setTrans(btn, val) {
+  document.querySelectorAll('.trans-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  filters.trans = val;
+  applyFilters();
+}
+
+function setRating(btn, val) {
+  document.querySelectorAll('.rating-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  filters.rating = val;
+  applyFilters();
+}
+
+function updatePriceLabel() {
+  const val = document.getElementById('priceRange').value;
+  filters.price = parseInt(val);
+  document.getElementById('priceLabel').textContent = '₹' + parseInt(val).toLocaleString('en-IN');
+  applyFilters();
+}
+
+function updateMileageLabel() {
+  const val = document.getElementById('mileageRange').value;
+  filters.mileage = parseInt(val);
+  document.getElementById('mileageLabel').textContent = val + ' km/l';
+  applyFilters();
+}
+
+function clearAllFilters() {
+  filters = { cat:'all', seats:'all', fuel:'all', trans:'all', price:18000, mileage:10, rating:0 };
+  document.getElementById('searchInput').value = '';
+  document.getElementById('sortSelect').value  = '';
+  document.getElementById('priceRange').value   = 18000;
+  document.getElementById('mileageRange').value = 10;
+  document.getElementById('priceLabel').textContent   = '₹18,000';
+  document.getElementById('mileageLabel').textContent = '10 km/l';
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('[data-cat="all"]').classList.add('active');
+  document.querySelectorAll('.seat-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('[data-seats="all"]').classList.add('active');
+  document.querySelectorAll('.fuel-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('[data-fuel="all"]').classList.add('active');
+  document.querySelectorAll('.trans-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('[data-trans="all"]').classList.add('active');
+  document.querySelectorAll('.rating-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('[data-rating="0"]').classList.add('active');
+  applyFilters();
+}
+
+/* ── SEARCH & SORT LISTENERS ── */
+document.getElementById('searchInput').addEventListener('input', applyFilters);
+document.getElementById('sortSelect').addEventListener('change', applyFilters);
+
+/* ── INIT ── */
+applyFilters();
+
+</script>
+</body>
+</html>
